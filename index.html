@@ -137,7 +137,8 @@
                             <i class="fa-regular fa-face-smile fa-2x"></i>
                         </div>
                         <div class="message-input h-100">
-                            <textarea rows="3" placeholder="Scrivi un messaggio"></textarea>
+                            <textarea rows="3" placeholder="Scrivi un messaggio" v-model.trim="newMessage"
+                                @keyup.enter="sendMessage()"></textarea>
                         </div>
                         <div class="send activity-buttons">
                             <i class="fa-solid fa-microphone fa-2x"></i>
