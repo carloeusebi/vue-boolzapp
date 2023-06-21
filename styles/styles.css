@@ -71,7 +71,8 @@ textarea {
     cursor: pointer;
 }
 
-.contact:not(.user):hover {
+.contact:not(.user):hover,
+.contact.active {
     background-color: var(--header-bg);
 }
 

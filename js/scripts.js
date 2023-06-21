@@ -32,10 +32,15 @@ const app = Vue.createApp({
 
         activeContact() {
             return this.getActiveContact();
-        }
+        },
+
     },
 
     methods: {
+        isActiveContact(id) {
+            return id === this.activeContactId;
+        },
+
         setActiveId(id) {
             this.activeContactId = id;
         },
