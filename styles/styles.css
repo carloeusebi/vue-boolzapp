@@ -26,6 +26,17 @@ body {
     font-family: sans-serif;
 }
 
+/* scrollbars */
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--text-gray);
+}
+
+
+
 /* ! UTILITIES */
 
 .background {
