@@ -32,8 +32,8 @@ const app = Vue.createApp({
         },
 
         filteredContactsBySearch() {
-            const searchedWord = this.contactSearchWord.toLowerCase
-            return this.contacts.filter(({ name }) => name.toLowerCase().includes(this.contactSearchWord));
+            const searchedWord = this.contactSearchWord.toLowerCase();
+            return this.contacts.filter(({ name }) => name.toLowerCase().includes(searchedWord));
         },
 
         activeContact() {
