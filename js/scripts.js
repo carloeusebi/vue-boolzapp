@@ -19,7 +19,11 @@ const app = Vue.createApp({
         contacts() {
             return this.data.contacts.map(({ id, name, avatar, visible, messages }) => {
 
-                const lastMessage = messages[messages.length - 1];
+                let lastMessage = '';
+
+                if (messages.length > 0) {
+                    lastMessage = messages[messages.length - 1];
+                }
 
                 return {
                     id,
