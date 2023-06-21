@@ -16,6 +16,9 @@
 
     --text-gray: #b1b1b1;
     --text-dark-gray: #6b7376;
+
+    --sent-message-color: #d5f9ba;
+    --received-message-color: #ffffff;
 }
 
 /* ! GENERALS */
@@ -213,14 +216,42 @@ footer {
     flex-direction: column;
 }
 
+#chat .contact.active .last-access {
+    color: var(--text-dark-gray);
+}
+
+/* chat and bubbles */
 #chat .chat {
     background-image: url('../img/mine.jpg');
     flex-grow: 1;
     overflow: auto;
+
+    display: flex;
+    flex-direction: column;
+
+    padding: 7%;
 }
 
-#chat .contact.active .last-access {
-    color: var(--text-dark-gray);
+.chat .bubble {
+    width: 45%;
+    padding: 15px 10px 10px;
+    border-radius: 15px;
+    margin: 1rem 0;
+}
+
+.chat .bubble.sent {
+    background-color: var(--sent-message-color);
+    align-self: end;
+}
+
+.chat .bubble.received {
+    background-color: var(--received-message-color);
+}
+
+.chat .bubble .date {
+    color: var(--text-gray);
+    font-size: 12px;
+    text-align: right;
 }
 
 /* footer chat */
