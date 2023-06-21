@@ -62,6 +62,9 @@ main {
     height: 100%;
 
     display: flex;
+    box-shadow: 0 0 5px #666;
+    border-radius: 3px;
+    overflow: hidden;
 }
 
 main section {
@@ -106,7 +109,6 @@ footer {
 
     display: flex;
     align-items: center;
-    justify-content: space-;
 }
 
 #notification-settings .fa-bell-slash {
