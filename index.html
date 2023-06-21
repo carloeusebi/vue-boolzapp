@@ -44,11 +44,9 @@
                         <!-- contact card -->
                         <div class="contact user">
                             <div class="avatar">
-                                <img src="" alt="">
+                                <img :src="user.avatar" :alt="user.name">
                             </div>
-                            <p class="name">
-
-                            </p>
+                            <p class="name">{{user.name}}</p>
                         </div>
 
                         <div class="activity-buttons">
