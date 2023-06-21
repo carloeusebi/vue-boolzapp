@@ -43,6 +43,11 @@ img {
     display: inline-block;
 }
 
+.container {
+    max-width: 100%;
+    margin: 0 auto;
+}
+
 /* # flex utilities */
 .d-flex {
     display: flex;
@@ -216,6 +221,10 @@ a {
 /* # tablet media */
 @media screen and (min-width: 769px) {
 
+    .container {
+        max-width: 720px;
+    }
+
     .tablet,
     .smartphone.d-flex {
         display: block;
@@ -232,6 +241,11 @@ a {
 
 /* #desktop */
 @media screen and (min-width:992px) {
+
+    .container {
+        max-width: 960px;
+    }
+
     .desktop {
         display: block;
     }
@@ -243,5 +257,10 @@ a {
     .p20-lg {
         padding: 20px;
     }
+}
 
+@media screen and (min-width: 1200px) {
+    .container {
+        max-width: 1140px;
+    }
 }
