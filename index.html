@@ -122,9 +122,9 @@
                     <div class="chat">
 
 
-                        <div class="bubble sent">
-                            <p class="message mb-10"></p>
-                            <p class="date"></p>
+                        <div v-for="message in activeContact.messages" class="bubble" :class="message.status">
+                            <p class="message mb-10">{{message.message}}</p>
+                            <p class="date">{{message.date}}</p>
                             <i class="fa-solid fa-angle-down"></i>
                         </div>
 
