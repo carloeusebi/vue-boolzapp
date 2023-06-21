@@ -41,7 +41,7 @@ body {
 
 .background {
     height: 100vh;
-    background-image: linear-gradient(var(--bg-top) 10%, var(--bg-bottom) 10%);
+    background-image: linear-gradient(var(--bg-top) 15%, var(--bg-bottom) 15%);
 }
 
 .background>.container {
@@ -121,8 +121,11 @@ textarea {
     padding: 10px;
 }
 
-.activity-buttons>i {
-    padding: 0 10px;
+.activity-buttons>i::before {
+    /* padding to give buttons some clickable space around them for better ux;
+    margin to give them some breathing unclicakble space between them */
+    padding: 8px;
+    margin: 0 7px;
     cursor: pointer;
 }
 
@@ -258,7 +261,7 @@ footer {
     width: 45%;
     padding: 15px 10px 10px;
     border-radius: 15px;
-    margin: 1rem 0;
+    margin: .5rem 0;
     position: relative;
 }
 

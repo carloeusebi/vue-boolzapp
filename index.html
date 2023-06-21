@@ -123,7 +123,7 @@
 
 
                         <div v-for="message in activeContact.messages" class="bubble" :class="message.status">
-                            <p class="message mb-10">{{message.message}}</p>
+                            <p class="message">{{message.message}}</p>
                             <p class="date">{{message.date}}</p>
                             <i class="fa-solid fa-angle-down"></i>
                         </div>
@@ -137,7 +137,7 @@
                             <i class="fa-regular fa-face-smile fa-2x"></i>
                         </div>
                         <div class="message-input h-100">
-                            <textarea rows="3" placeholder="Scrivi un messaggio" v-model.trim="newMessage"
+                            <textarea rows="1" placeholder="Scrivi un messaggio" v-model.trim="newMessage"
                                 @keyup.enter="sendMessage()"></textarea>
                         </div>
                         <div class="send activity-buttons">
