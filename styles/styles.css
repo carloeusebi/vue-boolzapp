@@ -1,12 +1,63 @@
-/* css reset */
+/* CSS RESET */
+
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
-/* custom properties */
+/* CUSTOM PROPERTIES */
+
 :root {
-    --bg-top: ;
-    --bg-bottom: ;
+    --bg-top: #009688;
+    --bg-bottom: #d9dbd4;
+}
+
+/* UTILITIES */
+
+.background {
+    height: 100vh;
+    background-image: linear-gradient(var(--bg-top) 10%, var(--bg-bottom) 10%);
+}
+
+.background>.container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* MAIN PROPERTIES */
+
+main {
+    background-color: white;
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+}
+
+main section {
+    height: 100%;
+}
+
+#contacts {
+    flex-basis: calc(100% / 3);
+    background-color: green;
+}
+
+#chat {
+    flex-basis: calc(100% / 3 * 2);
+    background-color: yellow;
+}
+
+
+
+/* MEDIA QUERIES */
+
+@media screen and (min-width: 768px) {
+    main {
+        height: 90%;
+    }
 }
