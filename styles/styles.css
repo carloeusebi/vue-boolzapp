@@ -294,6 +294,25 @@ footer {
     display: inline-block;
 }
 
+.bubble .message-menu {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    top: 25px;
+    right: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px #aaa;
+    z-index: 1
+}
+
+.bubble .message-menu li {
+    padding: 15px;
+    cursor: pointer;
+}
+
+.bubble .message-menu li:hover {
+    background-color: #efefef;
+}
 
 /* footer chat */
 .message-input {
