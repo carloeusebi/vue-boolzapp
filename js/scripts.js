@@ -4,7 +4,8 @@ const app = Vue.createApp({
         return {
             data,
             activeContactId: 1,
-            newMessage: ''
+            newMessage: '',
+            contactSearchWord: ''
         }
     },
 
@@ -28,6 +29,11 @@ const app = Vue.createApp({
                     lastMessage
                 }
             });
+        },
+
+        filteredContactsBySearch() {
+            const searchedWord = this.contactSearchWord.toLowerCase
+            return this.contacts.filter(({ name }) => name.toLowerCase().includes(this.contactSearchWord));
         },
 
         activeContact() {

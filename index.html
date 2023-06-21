@@ -68,14 +68,14 @@
 
                     <!-- search -->
                     <div class="search-contact">
-                        <input type="search" placeholder="Search or start a new chat">
+                        <input type="search" placeholder="Search or start a new chat" v-model.trim="contactSearchWord">
                     </div>
 
                     <!-- contact list -->
                     <div id="contacts-list">
                         <ul>
 
-                            <li v-for="contact in contacts" @click="setActiveId(contact.id)">
+                            <li v-for="contact in filteredContactsBySearch" @click="setActiveId(contact.id)">
                                 <div class="contact" :class="{'active' : isActiveContact(contact.id)}">
                                     <div class="avatar">
                                         <img :src="contact.avatar" :alt="contact.name">
