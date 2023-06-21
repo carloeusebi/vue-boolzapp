@@ -11,6 +11,8 @@
 :root {
     --bg-top: #009688;
     --bg-bottom: #d9dbd4;
+    --header-bg: #eaeaea;
+    --notification-settings-bg: #8edafc;
 }
 
 /* UTILITIES */
@@ -42,17 +44,42 @@ main section {
     height: 100%;
 }
 
+header {
+    height: 150px;
+    background-color: var(--header-bg);
+}
+
+/* CONTACTS */
+
 #contacts {
     flex-basis: calc(100% / 3);
-    background-color: green;
+
+    display: flex;
+    flex-direction: column;
 }
+
+#contacts #notification-settings {
+    background-color: var(--notification-settings-bg);
+    height: 175px;
+}
+
+#contacts #contacts-list {
+    background-color: white;
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+#contacts .search-contact input {
+    width: 100%;
+}
+
+/* CHAT */
 
 #chat {
     flex-basis: calc(100% / 3 * 2);
-    background-color: yellow;
+    /* todo this should not be the  background of the section */
+    background-image: url('../img/mine.jpg');
 }
-
-
 
 /* MEDIA QUERIES */
 
