@@ -5,7 +5,8 @@ const app = Vue.createApp({
             data,
             activeContactId: 1,
             newMessage: '',
-            contactSearchWord: ''
+            contactSearchWord: '',
+            messageMenu: []
         }
     },
 
@@ -53,6 +54,34 @@ const app = Vue.createApp({
 
         getActiveContact() {
             return this.contacts.find(({ id }) => id === this.activeContactId);
+        },
+
+        showMessageMenu(i) {
+            this.hideAllMessageMenus();
+            setTimeout(() => {
+                this.messageMenu[i] = true
+            }, 100);
+        },
+
+        hideAllMessageMenus() {
+            setTimeout(() => {
+                this.messageMenu = this.messageMenu.map(elem => elem = false)
+            }, 50);
+
+        },
+
+        deleteMessage(id) {
+
+            /* in order to "really" delete the message we need to delete the original entry on the data structure;
+            since we can't use references to do so we first need to find the index in the data array were our current active contact is located at */
+
+            const index = this.data.contacts.findIndex(contact => contact.id === this.activeContactId);
+
+            /* once we have found the index we can use it to directly access the active contact's messages in data and delete it
+            */
+
+            this.data.contacts[index].messages = this.data.contacts[index].messages.filter(message =>
+                message.id !== id);
         },
 
         sendMessage() {

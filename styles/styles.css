@@ -295,7 +295,6 @@ footer {
 }
 
 .bubble .message-menu {
-    display: none;
     position: absolute;
     background-color: #fff;
     top: 25px;

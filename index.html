@@ -119,17 +119,17 @@
                     </header>
 
                     <!-- CHAT -->
-                    <div class="chat">
+                    <div class="chat" @click="hideAllMessageMenus">
 
 
                         <div v-for="message in activeContact.messages" class="bubble" :class="message.status">
                             <p class="message">{{message.message}}</p>
                             <p class="date">{{message.date}}</p>
-                            <i class="fa-solid fa-angle-down"></i>
-                            <div class="message-menu">
+                            <i class="fa-solid fa-angle-down" @click="showMessageMenu(message.id) = true"></i>
+                            <div v-if="messageMenu[message.id]" class="message-menu">
                                 <ul>
                                     <li>Message info</li>
-                                    <li>Delete message</li>
+                                    <li @click="deleteMessage(message.id)">Delete message</li>
                                 </ul>
                             </div>
                         </div>
