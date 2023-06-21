@@ -87,6 +87,10 @@ footer {
     flex-direction: column;
 }
 
+#contacts>* {
+    flex-shrink: 0;
+}
+
 /* header */
 .profile-buttons {
     display: flex;
@@ -109,6 +113,7 @@ footer {
 
     display: flex;
     align-items: center;
+
 }
 
 #notification-settings .fa-bell-slash {
@@ -138,6 +143,7 @@ footer {
     background-color: white;
     height: calc(100% - 233px);
     overflow: auto;
+    flex-grow: 1;
 }
 
 #contacts .search-contact input {
