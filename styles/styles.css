@@ -44,8 +44,9 @@ main section {
     height: 100%;
 }
 
-header {
-    height: 150px;
+header,
+footer {
+    height: 100px;
     background-color: var(--header-bg);
 }
 
@@ -60,25 +61,30 @@ header {
 
 #contacts #notification-settings {
     background-color: var(--notification-settings-bg);
-    height: 175px;
+    height: 100px;
 }
 
 #contacts #contacts-list {
     background-color: white;
-    flex-grow: 1;
-    overflow-y: auto;
+    height: calc(100% - 233px);
+    overflow: auto;
 }
 
 #contacts .search-contact input {
     width: 100%;
+    height: 33px;
 }
 
 /* CHAT */
 
 #chat {
     flex-basis: calc(100% / 3 * 2);
-    /* todo this should not be the  background of the section */
+}
+
+#chat .chat {
     background-image: url('../img/mine.jpg');
+    height: calc(100% - 200px);
+    overflow: auto;
 }
 
 /* MEDIA QUERIES */
