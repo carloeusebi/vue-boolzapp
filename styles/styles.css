@@ -237,6 +237,7 @@ footer {
     padding: 15px 10px 10px;
     border-radius: 15px;
     margin: 1rem 0;
+    position: relative;
 }
 
 .chat .bubble.sent {
@@ -253,6 +254,21 @@ footer {
     font-size: 12px;
     text-align: right;
 }
+
+.chat .bubble .fa-angle-down {
+    color: var(--text-dark-gray);
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+
+    display: none;
+}
+
+.chat .bubble:hover .fa-angle-down {
+    display: inline-block;
+}
+
 
 /* footer chat */
 .message-input {
