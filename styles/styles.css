@@ -75,6 +75,19 @@ body {
     text-align: right;
 }
 
+/** activity buttons */
+.activity-buttons {
+    display: flex;
+    color: var(--text-gray);
+    align-items: center;
+    padding: 10px;
+}
+
+.activity-buttons>i {
+    padding: 0 10px;
+    cursor: pointer;
+}
+
 /* ! MAIN PROPERTIES */
 
 main {
@@ -110,19 +123,6 @@ footer {
 
 #contacts>* {
     flex-shrink: 0;
-}
-
-/* header */
-.profile-buttons {
-    display: flex;
-    color: var(--text-gray);
-    align-items: center;
-    padding: 10px;
-}
-
-.profile-buttons>i {
-    padding: 0 7px;
-    cursor: pointer;
 }
 
 /* notifications */
