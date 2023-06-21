@@ -4,9 +4,10 @@ const app = Vue.createApp({
         return {
             data,
             activeContactId: 1,
+            isTyping: 0,
             newMessage: '',
             contactSearchWord: '',
-            messageMenu: []
+            messageMenu: [],
         }
     },
 
@@ -125,6 +126,8 @@ const app = Vue.createApp({
 
             //TODO chatgpt should handle the response :)
 
+            this.isTyping = this.activeContactId;
+
             setTimeout(() => {
                 const id = getMessageId(activeContact);
                 const date = getCurrentTime();
@@ -134,7 +137,9 @@ const app = Vue.createApp({
                 const responseMessage = { id, date, message, status };
 
                 activeContact.messages.push(responseMessage);
-            }, 1000);
+                this.isTyping = 0;
+            }, 2000);
+
 
         }
     },
