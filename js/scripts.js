@@ -64,10 +64,9 @@ const app = Vue.createApp({
 
             /**
              * Checks all the contact messages ids and returns the lowest possibile non present id
-             * @param {object} contact 
-             * @returns 
+             * @returns the id for the new message
              */
-            const getMessageId = contact => activeContact.messages.reduce((highest, { id }) => id > highest ? id : highest, 0) + 1;
+            const getMessageId = (contact) => contact.messages.reduce((highest, { id }) => id > highest ? id : highest, 0) + 1;
 
             const activeContact = this.getActiveContact();
 
@@ -75,7 +74,7 @@ const app = Vue.createApp({
 
             if (!message) return;
 
-            const id = getMessageId();
+            const id = getMessageId(activeContact);
             const date = getCurrentTime();
             const status = 'sent';
 
@@ -84,6 +83,20 @@ const app = Vue.createApp({
             activeContact.messages.push(justSentMessage);
 
             this.newMessage = '';
+
+            //TODO chatgpt should handle the response :)
+
+            setTimeout(() => {
+                const id = getMessageId(activeContact);
+                const date = getCurrentTime();
+                const status = 'received';
+                const message = 'ok...';
+
+                const responseMessage = { id, date, message, status };
+
+                activeContact.messages.push(responseMessage);
+            }, 1000);
+
         }
     },
 
