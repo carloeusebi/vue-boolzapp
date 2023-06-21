@@ -13,6 +13,13 @@
     --bg-bottom: #d9dbd4;
     --header-bg: #eaeaea;
     --notification-settings-bg: #8edafc;
+
+    --text-gray: #b1b1b1;
+}
+
+/* GENERALS */
+body {
+    font-family: sans-serif;
 }
 
 /* UTILITIES */
@@ -28,6 +35,23 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+/** contact cards */
+.contact {
+    display: flex;
+    padding: .5rem;
+}
+
+.contact.user {
+    align-items: center;
+}
+
+.contact .avatar img {
+    width: 75px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    margin-right: .5rem;
 }
 
 /* MAIN PROPERTIES */
@@ -48,15 +72,28 @@ header,
 footer {
     height: 100px;
     background-color: var(--header-bg);
+    padding: 5px;
 }
 
 /* CONTACTS */
 
 #contacts {
     flex-basis: calc(100% / 3);
-
+    border-right: 1px solid var(--text-gray);
     display: flex;
     flex-direction: column;
+}
+
+.profile-buttons {
+    display: flex;
+    color: var(--text-gray);
+    align-items: center;
+    padding: 10px;
+}
+
+.profile-buttons>i {
+    padding: 0 7px;
+    cursor: pointer;
 }
 
 #contacts #notification-settings {
