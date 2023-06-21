@@ -41,10 +41,15 @@ body {
 .contact {
     display: flex;
     padding: .5rem;
+    cursor: pointer;
 }
 
 .contact.user {
     align-items: center;
+}
+
+.contact .name {
+    padding: .5rem 0;
 }
 
 .contact .avatar img {
