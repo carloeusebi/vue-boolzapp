@@ -36,8 +36,9 @@
             <!-- MAIN -->
             <main>
 
-                <!-- CONTACTS PAGE -->
+                <!-- ! CONTACTS PAGE -->
                 <section id="contacts">
+
                     <!-- header -->
                     <header class="d-flex justify-space-between">
 
@@ -74,16 +75,16 @@
                     <div id="contacts-list">
                         <ul>
 
-                            <li>
+                            <li v-for="contact in contacts">
                                 <div class="contact">
                                     <div class="avatar">
-                                        <img src="" alt="">
+                                        <img :src="contact.avatar" :alt="contact.name">
                                     </div>
-                                    <div>
-                                        <p class="name"></p>
-                                        <p class="message"></p>
+                                    <div class="name-wrapper">
+                                        <p class="name">{{contact.name}}</p>
+                                        <p class="message">{{contact.lastMessage.message}}</p>
                                     </div>
-                                    <p class="last-access"></p>
+                                    <p class="last-access">{{contact.lastMessage.date}}</p>
                                 </div>
                             </li>
 
@@ -91,7 +92,7 @@
                     </div>
                 </section>
 
-                <!-- CHAT PAGE -->
+                <!-- ! CHAT PAGE -->
                 <section id="chat">
 
                     <!-- header -->

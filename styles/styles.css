@@ -97,6 +97,16 @@ textarea {
     font-size: 14px;
 }
 
+.contact .name-wrapper {
+    max-width: 220px;
+}
+
+.contact .message {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .contact .last-access {
     flex-grow: 1;
     text-align: right;
