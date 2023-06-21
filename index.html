@@ -75,7 +75,7 @@
                     <div id="contacts-list">
                         <ul>
 
-                            <li v-for="contact in contacts">
+                            <li v-for="contact in contacts" @click="setActiveId(contact.id)">
                                 <div class="contact">
                                     <div class="avatar">
                                         <img :src="contact.avatar" :alt="contact.name">
@@ -101,11 +101,11 @@
                         <!-- contact -->
                         <div class="contact active">
                             <div class="avatar">
-                                <img src="" alt="">
+                                <img :src="activeContact.avatar" :alt="activeContact.name">
                             </div>
                             <div>
-                                <p class="name"></p>
-                                <p class="last-access"></p>
+                                <p class="name">{{ activeContact.name}}</p>
+                                <p class="last-access">Ultimo accesso oggi alle {{activeContact.lastMessage.date}}</p>
                             </div>
                         </div>
 

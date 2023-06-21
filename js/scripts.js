@@ -2,7 +2,8 @@ const app = Vue.createApp({
     name: 'Boolzapp',
     data() {
         return {
-            data,
+            activeContactId: 1,
+            data
         }
     },
 
@@ -26,11 +27,18 @@ const app = Vue.createApp({
                     lastMessage
                 }
             });
+        },
+
+        activeContact() {
+            return this.contacts.find(({ id }) => id === this.activeContactId);
         }
 
     },
 
     methods: {
+        setActiveId(id) {
+            this.activeContactId = id;
+        }
     },
 
     mount() {
