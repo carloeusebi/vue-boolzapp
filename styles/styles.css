@@ -1,4 +1,4 @@
-/* CSS RESET */
+/* ! CSS RESET */
 
 * {
     box-sizing: border-box;
@@ -6,7 +6,7 @@
     padding: 0;
 }
 
-/* CUSTOM PROPERTIES */
+/* ! CUSTOM PROPERTIES */
 
 :root {
     --bg-top: #009688;
@@ -17,12 +17,12 @@
     --text-gray: #b1b1b1;
 }
 
-/* GENERALS */
+/* ! GENERALS */
 body {
     font-family: sans-serif;
 }
 
-/* UTILITIES */
+/* ! UTILITIES */
 
 .background {
     height: 100vh;
@@ -54,7 +54,7 @@ body {
     margin-right: .5rem;
 }
 
-/* MAIN PROPERTIES */
+/* ! MAIN PROPERTIES */
 
 main {
     background-color: white;
@@ -75,7 +75,7 @@ footer {
     padding: 5px;
 }
 
-/* CONTACTS */
+/* ! CONTACTS */
 
 #contacts {
     flex-basis: calc(100% / 3);
@@ -84,6 +84,7 @@ footer {
     flex-direction: column;
 }
 
+/* header */
 .profile-buttons {
     display: flex;
     color: var(--text-gray);
@@ -96,11 +97,41 @@ footer {
     cursor: pointer;
 }
 
+/* notifications */
 #contacts #notification-settings {
     background-color: var(--notification-settings-bg);
     height: 100px;
+
+    padding: 10px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-;
 }
 
+#notification-settings .fa-bell-slash {
+    width: 75px;
+    aspect-ratio: 1;
+    background-color: white;
+
+    margin-right: .5rem;
+
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    color: var(--notification-settings-bg)
+}
+
+#notification-settings .activate-notification-btn {
+    color: #666;
+    font-size: 14px;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+/* contacts list */
 #contacts #contacts-list {
     background-color: white;
     height: calc(100% - 233px);
@@ -112,7 +143,7 @@ footer {
     height: 33px;
 }
 
-/* CHAT */
+/* ! CHAT */
 
 #chat {
     flex-basis: calc(100% / 3 * 2);
@@ -124,7 +155,7 @@ footer {
     overflow: auto;
 }
 
-/* MEDIA QUERIES */
+/* ! MEDIA QUERIES */
 
 @media screen and (min-width: 768px) {
     main {
