@@ -177,7 +177,7 @@ async function makeRequest(payload) {
         body: JSON.stringify(payload),
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer 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'
+            'Authorization': 'Bearer ' + API_KEY
         }
     });
 
