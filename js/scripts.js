@@ -172,6 +172,9 @@ const app = Vue.createApp({
 
             this.data.contacts[index].messages = this.data.contacts[index].messages.filter(message =>
                 message.id !== id);
+
+            // ! this deletes message from chat but vue won't update it in data
+            // this.activeContact.messages = this.activeContact.messages.filter(message => message.id !== id);
         },
 
         sendMessage() {
