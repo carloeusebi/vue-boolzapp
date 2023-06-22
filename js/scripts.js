@@ -72,7 +72,8 @@ async function makeRequest(payload) {
 
 async function getResponse(userName, contact) {
 
-    let message = 'Non è stata rilevata nessuna API KEY per chat GPT, quindi non potrà rispondere';
+    let message = `Non è stata rilevata nessuna API KEY per chat GPT, quindi non potrà rispondere.<br>
+    Per poter attivare chatGPT creare un file auth.js nella cartella JS ed inserire la propria chiave in una variabile con il nome KEY.`;
 
     if (APY_KEY) {
         message = await getGptResponse(userName, contact);
