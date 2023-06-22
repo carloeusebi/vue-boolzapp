@@ -1,5 +1,53 @@
 const APY_KEY = (typeof KEY !== 'undefined') ? KEY : false;
 
+
+async function getGptResponse(userName, contact) {
+    const completeChat = [{
+        role: "system",
+        content: `Fingiamo una conversazione whatsapp, tu ti mi chiami ${userName} e io mi chiamo ${contact.name}`
+    }];
+
+    contact.messages.forEach(({ message, status }) => {
+        const role = status === 'sent' ? 'user' : 'assistant';
+        completeChat.push({ role, content: message });
+    });
+
+    console.log(completeChat);
+
+    return await makeRequest({
+        temperature: 0.9,
+        model: 'gpt-3.5-turbo',
+        messages: completeChat
+    })
+};
+
+async function makeRequest(payload) {
+    const url = 'https://api.openai.com/v1/chat/completions';
+
+    console.log(payload);
+
+    let message = '';
+
+    const response = await fetch(url, {
+        method: 'POST',
+        body: JSON.stringify(payload),
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + APY_KEY
+        }
+    });
+
+    if (response.status === 200) {
+        const jsonResponse = await response.json();
+        message = jsonResponse.choices[0].message.content;
+    } else {
+        message = 'Impossibile comunicare con ChatGPT, errore: ' + response.status;
+    }
+
+    return message;
+}
+
+
 const app = Vue.createApp({
     name: 'Boolzapp',
     data() {
@@ -91,24 +139,6 @@ const app = Vue.createApp({
                 message.id !== id);
         },
 
-        async getGptResponse() {
-            const completeChat = [{
-                role: "system",
-                content: `Fingiamo una conversazione whatsapp, tu ti mi chiami ${this.user.name} e io mi chiamo ${this.activeContact.name}`
-            }];
-
-            this.activeContact.messages.forEach(({ message, status }) => {
-                const role = status === 'sent' ? 'user' : 'assistant';
-                completeChat.push({ role, content: message });
-            });
-
-            return await makeRequest({
-                temperature: 0.9,
-                model: 'gpt-3.5-turbo',
-                messages: completeChat
-            })
-        },
-
         async sendMessage() {
             /**
              * calculates the current time
@@ -128,6 +158,21 @@ const app = Vue.createApp({
              */
             const getMessageId = (contact) => contact.messages.reduce((highest, { id }) => id > highest ? id : highest, 0) + 1;
 
+            async function getResponse(userName, contact) {
+                if (APY_KEY) {
+                    message = await getGptResponse(userName, contact);
+                } else {
+                    message = 'Non è stata rilevata nessuna API KEY per chat GPT, quindi non potrà rispondere';
+                }
+
+
+                id = getMessageId(contact);
+                date = getCurrentTime();
+                status = 'received';
+
+                return { id, date, message, status };
+            }
+
             const activeContact = this.getActiveContact();
 
             let message = this.newMessage;
@@ -144,28 +189,16 @@ const app = Vue.createApp({
 
             this.newMessage = '';
 
-            //TODO chatgpt should handle the response :)
-
             this.isTyping = this.activeContactId;
 
-            if (APY_KEY) {
-                message = await this.getGptResponse();
-            } else {
-                message = 'Non è stata rilevata nessuna API KEY per chat GPT, quindi non potrà rispondere';
-            }
+            // get response
 
-            id = getMessageId(activeContact);
-            date = getCurrentTime();
-            status = 'received';
-
-            const response = { id, date, message, status };
+            const response = await getResponse(this.user.name, activeContact);
 
             setTimeout(() => {
                 activeContact.messages.push(response);
                 this.isTyping = 0;
-            }, 2000)
-
-
+            }, 2000);
         }
     },
 
@@ -176,31 +209,3 @@ const app = Vue.createApp({
 });
 
 app.mount('#root');
-
-async function makeRequest(payload) {
-    const url = 'https://api.openai.com/v1/chat/completions';
-
-    let message = '';
-
-    const response = await fetch(url, {
-        method: 'POST',
-        body: JSON.stringify(payload),
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + APY_KEY
-        }
-    });
-
-
-    console.log(response);
-    if (response.status === 200) {
-        const jsonResponse = await response.json();
-        message = jsonResponse.choices[0].message.content;
-    } else {
-        message = 'Impossibile comunicare con ChatGPT, errore: ' + response.status;
-    }
-
-
-
-    return message;
-}
