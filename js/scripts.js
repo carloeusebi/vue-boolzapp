@@ -240,10 +240,10 @@ async function getGptResponse(userName, contact) {
  */
 async function getResponse(userName, contact) {
 
-    // TODO add instructions for getting the api key
     // The default message with instruction on how to get and 'install' a key
     let message = `Non è stata rilevata nessuna API KEY per chat GPT, quindi non potrà rispondere.<br>
-    Per poter attivare chatGPT creare un file auth.js nella cartella JS ed inserire la propria chiave in una variabile con il nome KEY.`;
+    Per poter attivare chatGPT creare un file auth.js nella cartella JS ed inserire la propria chiave in una variabile con il nome KEY.<br><br>
+    Per ottenere una API Key per OpenAI devi seguire questi passaggi: 1. Vai sul sito di OpenAI 2. Clicca sul pulsante "Sign Up for GPT-3" 3. Inserisci il tuo indirizzo email e premi su "Get Access" 4. Compila il form con le informazioni richieste e seleziona il tipo di utilizzo che intendi fare della piattaforma 5. Premi "Apply" 6. Dovresti ricevere un'email di risposta con le istruzioni per accedere alla dashboard di OpenAI e ottenere la tua API Key Spero di esserti stato utile!`;
 
     // if an api key is found it will ask chatgpt to generate a response
     if (APY_KEY) {
