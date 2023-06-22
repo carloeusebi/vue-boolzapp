@@ -39,7 +39,7 @@
             <main>
 
                 <!-- ! CONTACTS PAGE -->
-                <section id="contacts">
+                <section id="contacts" :class="{'hidden':activeContactId}">
 
                     <!-- header -->
                     <header class="d-flex justify-space-between">
@@ -97,20 +97,28 @@
                 </section>
 
                 <!-- ! CHAT PAGE -->
-                <section id="chat">
+                <section v-if="activeContactId" id="chat">
 
                     <!-- header -->
                     <header class="d-flex justify-space-between align-center">
 
-                        <!-- contact -->
-                        <div class="contact active">
-                            <div class="avatar">
-                                <img :src="activeContact.avatar" :alt="activeContact.name">
+                        <div class=" d-flex align-center">
+                            <div @click="unsetActiveContact" class="tablet-only">
+                                <i class="fa-solid fa-arrow-left fa-xl text-gray"></i>
                             </div>
-                            <div class="text-align-start">
-                                <p class="name">{{ activeContact.name}}</p>
-                                <p v-if="isTyping" class="last-access">Is typing...</p>
-                                <p v-else class="last-access">Ultimo accesso il {{activeContact.lastMessage.date}}</p>
+                            <!-- contact -->
+                            <div class="contact active">
+                                <div class="avatar">
+                                    <img :src="activeContact.avatar" :alt="activeContact.name">
+                                </div>
+                                <div class="text-align-start">
+                                    <p class="name">{{ activeContact.name}}</p>
+                                    <p v-if="isTyping" class="last-access">Is typing...</p>
+                                    <p v-else class="last-access">
+                                        <span class="desktop">Ultimo accesso il</span>
+                                        {{activeContact.lastMessage.date}}
+                                    </p>
+                                </div>
                             </div>
                         </div>
 
@@ -157,7 +165,9 @@
                     </footer>
 
                 </section>
+                <section v-else id="rest-background" class="hidden">
 
+                </section>
             </main>
 
         </div>

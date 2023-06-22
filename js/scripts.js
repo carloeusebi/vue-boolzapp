@@ -94,7 +94,7 @@ const app = Vue.createApp({
     data() {
         return {
             data,
-            activeContactId: 1,
+            activeContactId: 0,
             isTyping: 0,
             newMessage: '',
             contactSearchWord: '',
@@ -149,6 +149,10 @@ const app = Vue.createApp({
 
         setActiveId(id) {
             this.activeContactId = id;
+        },
+
+        unsetActiveContact() {
+            this.activeContactId = 0;
         },
 
         showMessageMenu(i) {

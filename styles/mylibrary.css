@@ -247,7 +247,7 @@ a {
     }
 
     .desktop {
-        display: block;
+        display: inline;
     }
 
     .d-flex-lg {
@@ -256,6 +256,10 @@ a {
 
     .p20-lg {
         padding: 20px;
+    }
+
+    .tablet-only {
+        display: none;
     }
 }
 

@@ -52,6 +52,10 @@ body {
     align-items: center;
 }
 
+.text-gray {
+    color: var(--text-gray);
+}
+
 input,
 textarea {
     width: 100%;
@@ -62,6 +66,20 @@ textarea {
     border: none;
     outline: none;
     resize: none;
+}
+
+section {
+    flex-grow: 1;
+}
+
+#chat.hidden,
+#contacts.hidden,
+#rest-background.hidden {
+    display: none;
+}
+
+#rest-background {
+    flex: 0 0 calc(100% / 3 * 2);
 }
 
 /** contact cards */
@@ -85,11 +103,16 @@ textarea {
     padding: .5rem 0;
 }
 
+.contact .avatar {
+    flex: 0 0 60px;
+    margin-right: .5rem;
+}
+
+
 .contact .avatar img {
-    width: 60px;
+    max-width: 100%;
     aspect-ratio: 1;
     border-radius: 50%;
-    margin-right: .5rem;
 }
 
 .contact .message,
@@ -334,5 +357,14 @@ footer {
 @media screen and (min-width: 768px) {
     main {
         height: 90%;
+    }
+}
+
+@media screen and (min-width: 992px) {
+
+    #contacts.hidden,
+    #chat.hidden,
+    #rest-background.hidden {
+        display: flex;
     }
 }
