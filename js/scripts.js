@@ -1,10 +1,28 @@
 const APY_KEY = (typeof KEY !== 'undefined') ? KEY : false;
 
+/**
+ * Checks all the contact messages ids and returns the lowest possibile non present id
+ * @returns the id for the new message
+ */
+const getMessageId = (contact) => contact.messages.reduce((highest, { id }) => id > highest ? id : highest, 0) + 1;
+
+/**
+ * calculates the current time
+ * @returns the current times
+ */
+const getCurrentTime = () => {
+    const dateObj = new Date()
+    const date = dateObj.toLocaleDateString();
+    const time = dateObj.toLocaleTimeString();
+
+    return date + ' ' + time;
+};
+
 
 async function getGptResponse(userName, contact) {
     const completeChat = [{
         role: "system",
-        content: `Fingiamo una conversazione whatsapp, tu ti mi chiami ${userName} e io mi chiamo ${contact.name}`
+        content: `Fingiamo una conversazione whatsapp, user si chiama ${userName} e assistant ${contact.name}`
     }];
 
     contact.messages.forEach(({ message, status }) => {
@@ -20,6 +38,7 @@ async function getGptResponse(userName, contact) {
         messages: completeChat
     })
 };
+
 
 async function makeRequest(payload) {
     const url = 'https://api.openai.com/v1/chat/completions';
@@ -45,6 +64,22 @@ async function makeRequest(payload) {
     }
 
     return message;
+}
+
+
+async function getResponse(userName, contact) {
+
+    let message = 'Non è stata rilevata nessuna API KEY per chat GPT, quindi non potrà rispondere';
+
+    if (APY_KEY) {
+        message = await getGptResponse(userName, contact);
+    }
+
+    const id = getMessageId(contact);
+    const date = getCurrentTime();
+    const status = 'received';
+
+    return { id, date, message, status };
 }
 
 
@@ -139,64 +174,32 @@ const app = Vue.createApp({
                 message.id !== id);
         },
 
-        async sendMessage() {
-            /**
-             * calculates the current time
-             * @returns the current times
-             */
-            const getCurrentTime = () => {
-                const dateObj = new Date()
-                const date = dateObj.toLocaleDateString();
-                const time = dateObj.toLocaleTimeString();
-
-                return date + ' ' + time;
-            };
-
-            /**
-             * Checks all the contact messages ids and returns the lowest possibile non present id
-             * @returns the id for the new message
-             */
-            const getMessageId = (contact) => contact.messages.reduce((highest, { id }) => id > highest ? id : highest, 0) + 1;
-
-            async function getResponse(userName, contact) {
-                if (APY_KEY) {
-                    message = await getGptResponse(userName, contact);
-                } else {
-                    message = 'Non è stata rilevata nessuna API KEY per chat GPT, quindi non potrà rispondere';
-                }
-
-
-                id = getMessageId(contact);
-                date = getCurrentTime();
-                status = 'received';
-
-                return { id, date, message, status };
-            }
-
-            const activeContact = this.getActiveContact();
-
-            let message = this.newMessage;
+        sendMessage() {
+            const message = this.newMessage;
 
             if (!message) return;
 
-            let id = getMessageId(activeContact);
-            let date = getCurrentTime();
-            let status = 'sent';
+            const id = getMessageId(this.activeContact);
+            const date = getCurrentTime();
+            const status = 'sent';
 
             const justSentMessage = { id, date, message, status }
 
-            activeContact.messages.push(justSentMessage);
+            this.activeContact.messages.push(justSentMessage);
 
             this.newMessage = '';
 
+            this.renderResponse();
+        },
+
+
+        async renderResponse() {
             this.isTyping = this.activeContactId;
 
-            // get response
-
-            const response = await getResponse(this.user.name, activeContact);
+            const response = await getResponse(this.user.name, this.activeContact);
 
             setTimeout(() => {
-                activeContact.messages.push(response);
+                this.activeContact.messages.push(response);
                 this.isTyping = 0;
             }, 2000);
         }
