@@ -1,7 +1,5 @@
 const APY_KEY = (typeof KEY !== 'undefined') ? KEY : false;
 
-console.log(APY_KEY);
-
 const app = Vue.createApp({
     name: 'Boolzapp',
     data() {
@@ -182,15 +180,27 @@ app.mount('#root');
 async function makeRequest(payload) {
     const url = 'https://api.openai.com/v1/chat/completions';
 
+    let message = '';
+
     const response = await fetch(url, {
         method: 'POST',
         body: JSON.stringify(payload),
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + API_KEY
+            'Authorization': 'Bearer ' + APY_KEY
         }
     });
 
-    const jsonResponse = await response.json();
-    return jsonResponse.choices[0].message.content;
+
+    console.log(response);
+    if (response.status === 200) {
+        const jsonResponse = await response.json();
+        message = jsonResponse.choices[0].message.content;
+    } else {
+        message = 'Impossibile comunicare con ChatGPT, errore: ' + response.status;
+    }
+
+
+
+    return message;
 }
