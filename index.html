@@ -60,10 +60,12 @@
                     </header>
 
                     <!-- notification -->
-                    <div v-if="!notifications" id="notification-settings">
-                        <i class="fa-solid fa-bell-slash fa-xl"></i>
+                    <div v-if="!notifications" id="notification-settings" class="contact">
+                        <div class="avatar d-flex justify-center align-center">
+                            <i class="fa-solid fa-bell-slash fa-xl"></i>
+                        </div>
                         <div>
-                            <p>Receive new message notifications</p>
+                            <p class="name">Receive new message notifications</p>
                             <p @click="activateNotifications" class="activate-notification-btn">Activate desktop
                                 notifications</p>
                         </div>
