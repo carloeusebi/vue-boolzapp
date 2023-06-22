@@ -96,13 +96,26 @@ const app = Vue.createApp({
             this.notifications = true;
         },
 
+        /**
+         * scrolls page to last message
+         */
         scrollPage() {
             this.$nextTick(() => {
                 this.$refs.chatWindow.scrollTop = this.$refs.chatWindow.scrollHeight;
             })
         },
 
-        sendMessage() {
+        /**
+         * Logs the message and scrolls the page 
+         * @param {object} contact the contact we are chatting with
+         * @param {object} message the obj with the message to send
+         */
+        send(contact, message) {
+            contact.messages.push(message);
+            this.scrollPage();
+        },
+
+        sendUserMessage() {
             const message = this.newMessage;
 
             if (!message) return;
@@ -110,16 +123,12 @@ const app = Vue.createApp({
             const status = 'sent';
             const justSentMessage = createMessage(this.activeContact, message, status);
 
-            this.activeContact.messages.push(justSentMessage);
-
-            this.scrollPage();
+            this.send(this.activeContact, justSentMessage);
 
             this.newMessage = '';
-
             this.sendResponse();
 
         },
-
 
         async sendResponse() {
             this.isTyping = this.activeContactId;
@@ -129,10 +138,10 @@ const app = Vue.createApp({
             const status = 'received';
             const response = createMessage(this.activeContact, message, status);
 
-            this.activeContact.messages.push(response);
+            this.send(this.activeContact, response);
+
             this.isTyping = 0;
 
-            this.scrollPage();
         }
     },
 
