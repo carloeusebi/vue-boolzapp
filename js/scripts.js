@@ -1,3 +1,7 @@
+const APY_KEY = (typeof KEY !== 'undefined') ? KEY : false;
+
+console.log(APY_KEY);
+
 const app = Vue.createApp({
     name: 'Boolzapp',
     data() {
@@ -92,7 +96,7 @@ const app = Vue.createApp({
         async getGptResponse() {
             const completeChat = [{
                 role: "system",
-                content: `Fingiamo una conversazione whatsapp, io mi chiamo ${this.user.name} e tu ti chiamo ${this.activeContact.name}`
+                content: `Fingiamo una conversazione whatsapp, tu ti mi chiami ${this.user.name} e io mi chiamo ${this.activeContact.name}`
             }];
 
             this.activeContact.messages.forEach(({ message, status }) => {
@@ -146,7 +150,11 @@ const app = Vue.createApp({
 
             this.isTyping = this.activeContactId;
 
-            message = await this.getGptResponse();
+            if (APY_KEY) {
+                message = await this.getGptResponse();
+            } else {
+                message = 'Non è stata rilevata nessuna API KEY per chat GPT, quindi non potrà rispondere';
+            }
 
             id = getMessageId(activeContact);
             date = getCurrentTime();
@@ -154,9 +162,11 @@ const app = Vue.createApp({
 
             const response = { id, date, message, status };
 
-            activeContact.messages.push(response);
+            setTimeout(() => {
+                activeContact.messages.push(response);
+                this.isTyping = 0;
+            }, 2000)
 
-            this.isTyping = 0;
 
         }
     },

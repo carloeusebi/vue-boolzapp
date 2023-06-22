@@ -84,7 +84,7 @@
                                     </div>
                                     <div class="name-wrapper">
                                         <p class="name">{{contact.name}}</p>
-                                        <p v-if="isTyping === contact.id" class="message">Is typing...</p>
+                                        <p v-if="isTyping === contact.id" class="message text-start">Is typing...</p>
                                         <p v-else class="message">{{contact.lastMessage.message}}</p>
                                     </div>
                                     <p class="last-access">{{contact.lastMessage.date}}</p>
