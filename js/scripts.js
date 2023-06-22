@@ -89,7 +89,25 @@ const app = Vue.createApp({
                 message.id !== id);
         },
 
-        sendMessage() {
+        async getGptResponse() {
+            const completeChat = [{
+                role: "system",
+                content: `Fingiamo una conversazione whatsapp, io mi chiamo ${this.user.name} e tu ti chiamo ${this.activeContact.name}`
+            }];
+
+            this.activeContact.messages.forEach(({ message, status }) => {
+                const role = status === 'sent' ? 'user' : 'assistant';
+                completeChat.push({ role, content: message });
+            });
+
+            return await makeRequest({
+                temperature: 0.9,
+                model: 'gpt-3.5-turbo',
+                messages: completeChat
+            })
+        },
+
+        async sendMessage() {
             /**
              * calculates the current time
              * @returns the current times
@@ -110,13 +128,13 @@ const app = Vue.createApp({
 
             const activeContact = this.getActiveContact();
 
-            const message = this.newMessage;
+            let message = this.newMessage;
 
             if (!message) return;
 
-            const id = getMessageId(activeContact);
-            const date = getCurrentTime();
-            const status = 'sent';
+            let id = getMessageId(activeContact);
+            let date = getCurrentTime();
+            let status = 'sent';
 
             const justSentMessage = { id, date, message, status }
 
@@ -128,18 +146,17 @@ const app = Vue.createApp({
 
             this.isTyping = this.activeContactId;
 
-            setTimeout(() => {
-                const id = getMessageId(activeContact);
-                const date = getCurrentTime();
-                const status = 'received';
-                const message = 'ok...';
+            message = await this.getGptResponse();
 
-                const responseMessage = { id, date, message, status };
+            id = getMessageId(activeContact);
+            date = getCurrentTime();
+            status = 'received';
 
-                activeContact.messages.push(responseMessage);
-                this.isTyping = 0;
-            }, 2000);
+            const response = { id, date, message, status };
 
+            activeContact.messages.push(response);
+
+            this.isTyping = 0;
 
         }
     },
@@ -151,3 +168,19 @@ const app = Vue.createApp({
 });
 
 app.mount('#root');
+
+async function makeRequest(payload) {
+    const url = 'https://api.openai.com/v1/chat/completions';
+
+    const response = await fetch(url, {
+        method: 'POST',
+        body: JSON.stringify(payload),
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer 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'
+        }
+    });
+
+    const jsonResponse = await response.json();
+    return jsonResponse.choices[0].message.content;
+}
