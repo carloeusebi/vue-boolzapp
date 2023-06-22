@@ -36,7 +36,7 @@ body {
 
 /* ! UTILITIES */
 .background {
-    height: 100dvh;
+    height: 100svh;
     background-image: linear-gradient(var(--bg-top) 15%, var(--bg-bottom) 15%);
 }
 
@@ -74,6 +74,7 @@ section.hidden {
 
 #wallpaper {
     flex: 0 0 calc(100% / 3 * 2);
+    /* TODO find a nicer img :) */
     background-image: url('../img/wallpaper.jpg');
     background-repeat: no-repeat;
     background-size: cover;
@@ -102,7 +103,7 @@ section.hidden {
 
 .contact .avatar {
     flex: 0 0 60px;
-    height: 60px;
+    aspect-ratio: 1;
     margin-right: .5rem;
     border-radius: 50%;
     overflow: hidden;
@@ -170,11 +171,19 @@ main section {
 
 header,
 footer {
-    height: 80px;
     background-color: var(--header-bg);
     flex-shrink: 0;
     padding: 10px 5px;
 }
+
+header {
+    height: 80px;
+}
+
+footer {
+    height: 60px;
+}
+
 
 section {
     display: flex;
@@ -237,14 +246,26 @@ section {
 /* ! CHAT */
 #chat {
     flex-basis: calc(100% / 3 * 2);
+    max-height: 100svh;
 }
 
 #chat .contact.active .last-access {
     color: var(--text-dark-gray);
 }
 
+#chat header {
+    height: 50px;
+}
+
+#chat header .avatar {
+    flex-basis: 40px;
+    height: 40px;
+}
+
 /* chat and bubbles */
 #chat .chat {
+    height: -webkit-fill-available;
+    font-size: 14px;
     background-image: url('../img/mine.jpg');
     flex-grow: 1;
     overflow: auto;
@@ -256,10 +277,10 @@ section {
 }
 
 .chat .bubble {
-    max-width: 50%;
+    max-width: 80%;
     padding: 15px 10px 10px;
     border-radius: 15px;
-    margin: .125rem 0;
+    margin: .2rem 0;
     position: relative;
 }
 
@@ -323,14 +344,19 @@ section {
     color: var(--text-dark-gray);
 }
 
-#chat footer textarea {
-    font-size: 1.1rem;
-}
-
 /* ! MEDIA QUERIES */
 @media screen and (min-width: 768px) {
     main {
         height: 90%;
+    }
+
+    #chat header {
+        height: 80px;
+    }
+
+    #chat header .avatar {
+        flex-basis: 60px;
+        height: 60px;
     }
 }
 
