@@ -74,12 +74,15 @@ section {
 
 #chat.hidden,
 #contacts.hidden,
-#rest-background.hidden {
+#wallpaper.hidden {
     display: none;
 }
 
-#rest-background {
+#wallpaper {
     flex: 0 0 calc(100% / 3 * 2);
+    background-image: url('../img/wallpaper.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 /** contact cards */
@@ -364,7 +367,7 @@ footer {
 
     #contacts.hidden,
     #chat.hidden,
-    #rest-background.hidden {
+    #wallpaper.hidden {
         display: flex;
     }
 }
