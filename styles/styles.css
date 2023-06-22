@@ -258,7 +258,7 @@ footer {
 }
 
 .chat .bubble {
-    width: 45%;
+    max-width: 45%;
     padding: 15px 10px 10px;
     border-radius: 15px;
     margin: .125rem 0;
@@ -272,6 +272,7 @@ footer {
 
 .chat .bubble.received {
     background-color: var(--received-message-color);
+    align-self: start;
 }
 
 .chat .bubble .date {
