@@ -19,18 +19,23 @@ const getCurrentTime = () => {
 };
 
 
+const createMessage = (contact, message, status) => {
+    const id = getMessageId(contact);
+    const date = getCurrentTime();
+    return { id, message, status, date };
+}
+
+
 async function getGptResponse(userName, contact) {
     const completeChat = [{
         role: "system",
-        content: `Fingiamo una conversazione whatsapp, user si chiama ${userName} e assistant ${contact.name}`
+        content: `Fingiamo una conversazione whatsapp, user si chiama ${userName} e assistant ${contact.name}, ricordati di fingere una versa persona e non un language model`
     }];
 
     contact.messages.forEach(({ message, status }) => {
         const role = status === 'sent' ? 'user' : 'assistant';
         completeChat.push({ role, content: message });
     });
-
-    console.log(completeChat);
 
     return await makeRequest({
         temperature: 0.9,
@@ -42,8 +47,6 @@ async function getGptResponse(userName, contact) {
 
 async function makeRequest(payload) {
     const url = 'https://api.openai.com/v1/chat/completions';
-
-    console.log(payload);
 
     let message = '';
 
@@ -75,13 +78,15 @@ async function getResponse(userName, contact) {
         message = await getGptResponse(userName, contact);
     }
 
-    const id = getMessageId(contact);
-    const date = getCurrentTime();
     const status = 'received';
+    const messageObj = createMessage(contact, message, status);
 
-    return { id, date, message, status };
+    return messageObj;
 }
 
+// ! ************************************************************************
+// ! ** VUE *****************************************************************
+// ! ************************************************************************
 
 const app = Vue.createApp({
     name: 'Boolzapp',
@@ -93,9 +98,11 @@ const app = Vue.createApp({
             newMessage: '',
             contactSearchWord: '',
             messageMenu: [],
+            notifications: false
         }
     },
 
+    // COMPUTED
     computed: {
         user() {
             const { name, avatar } = this.data.user;
@@ -128,11 +135,12 @@ const app = Vue.createApp({
         },
 
         activeContact() {
-            return this.getActiveContact();
+            return this.contacts.find(({ id }) => id === this.activeContactId);
         },
 
     },
 
+    // METHODS
     methods: {
         isActiveContact(id) {
             return id === this.activeContactId;
@@ -140,10 +148,6 @@ const app = Vue.createApp({
 
         setActiveId(id) {
             this.activeContactId = id;
-        },
-
-        getActiveContact() {
-            return this.contacts.find(({ id }) => id === this.activeContactId);
         },
 
         showMessageMenu(i) {
@@ -157,24 +161,14 @@ const app = Vue.createApp({
             setTimeout(() => {
                 this.messageMenu = this.messageMenu.map(elem => elem = false)
             }, 50);
-
         },
 
         deleteMessage(id) {
+            this.activeContact.messages = this.activeContact.messages.filter(message => message.id !== id);
+        },
 
-            /* in order to "really" delete the message we need to delete the original entry on the data structure;
-            since we can't use references to do so we first need to find the index in the data array were our current active contact is located at */
-
-            const index = this.data.contacts.findIndex(contact => contact.id === this.activeContactId);
-
-            /* once we have found the index we can use it to directly access the active contact's messages in data and delete it
-            */
-
-            this.data.contacts[index].messages = this.data.contacts[index].messages.filter(message =>
-                message.id !== id);
-
-            // ! this deletes message from chat but vue won't update it in data
-            // this.activeContact.messages = this.activeContact.messages.filter(message => message.id !== id);
+        activateNotifications() {
+            this.notifications = true;
         },
 
         sendMessage() {
@@ -182,11 +176,8 @@ const app = Vue.createApp({
 
             if (!message) return;
 
-            const id = getMessageId(this.activeContact);
-            const date = getCurrentTime();
             const status = 'sent';
-
-            const justSentMessage = { id, date, message, status }
+            const justSentMessage = createMessage(this.activeContact, message, status);
 
             this.activeContact.messages.push(justSentMessage);
 
@@ -201,10 +192,8 @@ const app = Vue.createApp({
 
             const response = await getResponse(this.user.name, this.activeContact);
 
-            setTimeout(() => {
-                this.activeContact.messages.push(response);
-                this.isTyping = 0;
-            }, 2000);
+            this.activeContact.messages.push(response);
+            this.isTyping = 0;
         }
     },
 
