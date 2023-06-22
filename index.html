@@ -106,7 +106,7 @@
                             <div class="avatar">
                                 <img :src="activeContact.avatar" :alt="activeContact.name">
                             </div>
-                            <div>
+                            <div class="text-align-start">
                                 <p class="name">{{ activeContact.name}}</p>
                                 <p v-if="isTyping" class="last-access">Is typing...</p>
                                 <p v-else class="last-access">Ultimo accesso il {{activeContact.lastMessage.date}}</p>
