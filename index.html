@@ -127,7 +127,7 @@
 
 
                         <div v-for="message in activeContact.messages" class="bubble" :class="message.status">
-                            <p class="message">{{message.message}}</p>
+                            <p class="message mr-20">{{message.message}}</p>
                             <p class="date">{{message.date}}</p>
                             <i class="fa-solid fa-angle-down" @click="showMessageMenu(message.id)"></i>
                             <div v-if="messageMenu[message.id]" class="message-menu">
