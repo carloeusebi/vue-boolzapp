@@ -134,7 +134,7 @@
                     </header>
 
                     <!-- CHAT -->
-                    <div class="chat" @click="hideAllMessageMenus">
+                    <div class="chat" @click="hideAllMessageMenus" ref="chatWindow">
 
 
                         <div v-for="message in activeContact.messages" class="bubble" :class="message.status">

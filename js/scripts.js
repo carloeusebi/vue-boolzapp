@@ -96,6 +96,12 @@ const app = Vue.createApp({
             this.notifications = true;
         },
 
+        scrollPage() {
+            this.$nextTick(() => {
+                this.$refs.chatWindow.scrollTop = this.$refs.chatWindow.scrollHeight;
+            })
+        },
+
         sendMessage() {
             const message = this.newMessage;
 
@@ -106,9 +112,12 @@ const app = Vue.createApp({
 
             this.activeContact.messages.push(justSentMessage);
 
+            this.scrollPage();
+
             this.newMessage = '';
 
             this.sendResponse();
+
         },
 
 
@@ -122,6 +131,8 @@ const app = Vue.createApp({
 
             this.activeContact.messages.push(response);
             this.isTyping = 0;
+
+            this.scrollPage();
         }
     },
 
