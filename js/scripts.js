@@ -223,21 +223,26 @@ async function makeRequest(payload) {
 
     let message = '';
 
-    const response = await fetch(url, {
-        method: 'POST',
-        body: JSON.stringify(payload),
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + APY_KEY
-        }
-    });
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            body: JSON.stringify(payload),
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + APY_KEY
+            }
+        });
 
-    // we handle the response, if status is 200 the response will be chatgpt actual message, otherwise the response will be an error message with the status code
-    if (response.status === 200) {
         const jsonResponse = await response.json();
-        message = jsonResponse.choices[0].message.content;
-    } else {
-        message = 'Impossibile comunicare con ChatGPT, errore: ' + response.status;
+
+        // we handle the response, if status is 200 the response will be chatgpt actual message, otherwise the response will be an error message with the status code
+        if (response.status === 200) {
+            message = jsonResponse.choices[0].message.content;
+        } else {
+            throw new Error(jsonResponse.error.message);
+        }
+    } catch (e) {
+        message = e.message;
     }
 
     return message;
