@@ -188,7 +188,7 @@ header,
 footer {
     background-color: var(--header-bg);
     flex-shrink: 0;
-    padding: 10px 5px;
+    padding: 10px 0;
 }
 
 header {
