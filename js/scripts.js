@@ -109,6 +109,10 @@ const app = Vue.createApp({
             this.isSearchingMsg = !this.isSearchingMsg;
         },
 
+        closeSearchMsg() {
+            this.isSearchingMsg = false;
+        },
+
         /**
          * Logs the message and scrolls the page 
          * @param {object} contact the contact we are chatting with

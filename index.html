@@ -33,7 +33,7 @@
 
     <!-- BACKGROUND -->
     <div class="background" id="root">
-        <div class="container">
+        <div class="container" @click="hideAllMessageMenus">
 
             <!-- MAIN -->
             <main>
@@ -80,7 +80,8 @@
                     <div id="contacts-list">
                         <ul>
 
-                            <li v-for="contact in filteredContactsBySearch" @click="setActiveId(contact.id)">
+                            <li v-for="contact in filteredContactsBySearch"
+                                @click="setActiveId(contact.id);closeSearchMsg()">
                                 <div v-if="contact.visible" class=" contact"
                                     :class="{'active' : isActiveContact(contact.id)}">
                                     <div class="avatar">
@@ -144,7 +145,7 @@
                     </header>
 
                     <!-- CHAT -->
-                    <div class="chat" @click="hideAllMessageMenus" ref="chatWindow">
+                    <div class="chat" ref="chatWindow">
 
 
                         <div v-for="message in filteredMessagesBySearch" class="bubble" :class="message.status">
