@@ -64,10 +64,6 @@ textarea {
     resize: none;
 }
 
-section {
-    flex-grow: 1;
-}
-
 section.hidden {
     display: none;
 }
@@ -165,10 +161,6 @@ main {
     overflow: hidden;
 }
 
-main section {
-    height: 100%;
-}
-
 header,
 footer {
     background-color: var(--header-bg);
@@ -186,9 +178,10 @@ footer {
 
 
 section {
+    height: 100%;
     display: flex;
     flex-direction: column;
-
+    flex-grow: 1;
 }
 
 /* ! CONTACTS */
