@@ -80,19 +80,19 @@ const app = Vue.createApp({
             this.activeContactId = 0;
         },
 
-        // this is tricky, see readme.md
+        // it has a timeout because since clicking on the message menu list is also clicking on the chat window, and a click on the chat window closes the message menu, che closing of the message menu needs to be delayed to allow the click on the list to be registered.
+        hideAllMessageMenus() {
+            setTimeout(() => {
+                this.messageMenu = this.messageMenu.map(elem => elem = false)
+            }, 50);
+        },
+
+        // since the hidAllMessageMenus function has a timeout, this function also needs a timeout; it closes all the other message menus, waits 1th of a second and then show the clicked one
         showMessageMenu(i) {
             this.hideAllMessageMenus();
             setTimeout(() => {
                 this.messageMenu[i] = true
             }, 100);
-        },
-
-        // this is tricky, see readme.md
-        hideAllMessageMenus() {
-            setTimeout(() => {
-                this.messageMenu = this.messageMenu.map(elem => elem = false)
-            }, 50);
         },
 
         toggleContactMenu() {
