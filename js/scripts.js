@@ -15,6 +15,7 @@ const app = Vue.createApp({
             messageMenu: [],
             notifications: false,
             isSearchingMsg: false,
+            contactMenu: false
         }
     },
 
@@ -92,6 +93,15 @@ const app = Vue.createApp({
             setTimeout(() => {
                 this.messageMenu = this.messageMenu.map(elem => elem = false)
             }, 50);
+        },
+
+        toggleContactMenu() {
+            this.contactMenu = !this.contactMenu;
+        },
+
+        hideContact() {
+            this.activeContact.visible = false;
+            this.toggleContactMenu();
         },
 
         deleteMessage(id) {

@@ -149,6 +149,29 @@ section.hidden {
     cursor: pointer;
 }
 
+/** menu */
+.dropdown-menu {
+    color: black;
+    min-width: 150px;
+    position: absolute;
+    background-color: #fff;
+    top: 25px;
+    right: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px #aaa;
+    z-index: 1
+}
+
+.dropdown-menu li {
+    padding: 15px;
+    cursor: pointer;
+}
+
+.dropdown-menu li:hover {
+    background-color: #efefef;
+}
+
+
 /* ! MAIN PROPERTIES */
 main {
     background-color: white;
@@ -255,6 +278,17 @@ section {
     height: 40px;
 }
 
+#chat header .activity-buttons {
+    position: relative;
+}
+
+#chat header .dropdown-menu {
+    position: absolute;
+    top: 150%;
+    left: 0;
+
+}
+
 /* chat and bubbles */
 #chat .chat {
     height: -webkit-fill-available;
@@ -308,25 +342,6 @@ section {
     display: inline-block;
 }
 
-.bubble .message-menu {
-    min-width: 150px;
-    position: absolute;
-    background-color: #fff;
-    top: 25px;
-    right: 10px;
-    border-radius: 5px;
-    box-shadow: 0 0 5px #aaa;
-    z-index: 1
-}
-
-.bubble .message-menu li {
-    padding: 15px;
-    cursor: pointer;
-}
-
-.bubble .message-menu li:hover {
-    background-color: #efefef;
-}
 
 /* footer chat */
 .message-input {

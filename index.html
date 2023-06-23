@@ -81,7 +81,8 @@
                         <ul>
 
                             <li v-for="contact in filteredContactsBySearch" @click="setActiveId(contact.id)">
-                                <div class="contact" :class="{'active' : isActiveContact(contact.id)}">
+                                <div v-if="contact.visible" class=" contact"
+                                    :class="{'active' : isActiveContact(contact.id)}">
                                     <div class="avatar">
                                         <img :src="contact.avatar" :alt="contact.name">
                                     </div>
@@ -104,10 +105,13 @@
                     <!-- header -->
                     <header class="d-flex justify-space-between align-center">
 
+
+                        <!-- go back arrow, only visible on tablets -->
                         <div class=" d-flex align-center">
                             <div @click="unsetActiveContact" class="tablet-only">
                                 <i class="fa-solid fa-arrow-left fa-xl text-gray"></i>
                             </div>
+
                             <!-- contact -->
                             <div class="contact active flex-shrink-0">
                                 <div class="avatar">
@@ -129,7 +133,12 @@
                             <input v-if="isSearchingMsg" type="search" v-model.trim="messageSearchWord">
                             <i @click="toggleSearchMsg" class="fa-solid fa-xl fa-magnifying-glass"></i>
                             <i class="fa-solid fa-xl fa-paperclip"></i>
-                            <i class="fa-solid fa-xl fa-ellipsis-vertical"></i>
+                            <i @click="toggleContactMenu" class="fa-solid fa-xl fa-ellipsis-vertical"></i>
+                            <div v-if="contactMenu" class="dropdown-menu">
+                                <ul>
+                                    <li @click="hideContact">Hide Contact</li>
+                                </ul>
+                            </div>
                         </div>
 
                     </header>
@@ -142,7 +151,7 @@
                             <p class="message mr-20" v-html="message.message"></p>
                             <p class="date">{{message.date}}</p>
                             <i class="fa-solid fa-angle-down" @click="showMessageMenu(message.id)"></i>
-                            <div v-if="messageMenu[message.id]" class="message-menu">
+                            <div v-if="messageMenu[message.id]" class="dropdown-menu">
                                 <ul>
                                     <li>Message info</li>
                                     <li @click="deleteMessage(message.id)">Delete message</li>
