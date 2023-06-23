@@ -223,7 +223,7 @@ async function makeRequest(payload) {
         const jsonResponse = await response.json();
 
         // we handle the response, if status is 200 the response will be chatgpt actual message, otherwise the response will be an error message with the status code
-        if (response.status === 200) {
+        if (response.ok) {
             message = jsonResponse.choices[0].message.content;
         } else {
             throw new Error(jsonResponse.error.message);
