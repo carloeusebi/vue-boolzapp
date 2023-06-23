@@ -6,7 +6,8 @@ const app = Vue.createApp({
     name: 'Boolzapp',
     data() {
         return {
-            data,
+            user: data.user,
+            contacts: data.contacts,
             activeContactId: 0,
             isTyping: 0,
             newMessage: '',
@@ -21,32 +22,6 @@ const app = Vue.createApp({
 
     // COMPUTED
     computed: {
-        user() {
-            const { name, avatar } = this.data.user;
-            return { name, avatar: `img/avatar${avatar}.jpg` };
-        },
-
-        // remaps the contact array, lastMessage is used to display last message text and date the contacts list
-        contacts() {
-            return this.data.contacts.map(({ id, name, avatar, visible, messages }) => {
-
-                let lastMessage = '';
-
-                if (messages.length > 0) {
-                    lastMessage = messages[messages.length - 1];
-                }
-
-                return {
-                    id,
-                    name,
-                    visible,
-                    avatar: `img/avatar${avatar}.jpg`,
-                    messages,
-                    lastMessage
-                }
-            });
-        },
-
         filteredContactsBySearch() {
             const searchedWord = this.contactSearchWord.toLowerCase();
             return this.contacts.filter(({ name }) => name.toLowerCase().includes(searchedWord));
@@ -65,6 +40,14 @@ const app = Vue.createApp({
 
     // METHODS
     methods: {
+
+        getLastMessage({ messages }) {
+            return messages[messages.length - 1].message;
+        },
+
+        getLastOnline({ messages }) {
+            return messages[messages.length - 1].date;
+        },
 
         //  Every contact in the contacts list calls this function to know if he is the current active, if he is a css class will the contact a background
         isActiveContact(id) {
