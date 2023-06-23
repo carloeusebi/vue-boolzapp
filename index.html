@@ -109,7 +109,7 @@
                                 <i class="fa-solid fa-arrow-left fa-xl text-gray"></i>
                             </div>
                             <!-- contact -->
-                            <div class="contact active">
+                            <div class="contact active flex-shrink-0">
                                 <div class="avatar">
                                     <img :src="activeContact.avatar" :alt="activeContact.name">
                                 </div>
@@ -126,7 +126,8 @@
 
                         <!-- chat buttons -->
                         <div class="activity-buttons">
-                            <i class="fa-solid fa-xl fa-magnifying-glass"></i>
+                            <input v-if="isSearchingMsg" type="search" v-model.trim="messageSearchWord">
+                            <i @click="toggleSearchMsg" class="fa-solid fa-xl fa-magnifying-glass"></i>
                             <i class="fa-solid fa-xl fa-paperclip"></i>
                             <i class="fa-solid fa-xl fa-ellipsis-vertical"></i>
                         </div>
@@ -137,7 +138,7 @@
                     <div class="chat" @click="hideAllMessageMenus" ref="chatWindow">
 
 
-                        <div v-for="message in activeContact.messages" class="bubble" :class="message.status">
+                        <div v-for="message in filteredMessagesBySearch" class="bubble" :class="message.status">
                             <p class="message mr-20" v-html="message.message"></p>
                             <p class="date">{{message.date}}</p>
                             <i class="fa-solid fa-angle-down" @click="showMessageMenu(message.id)"></i>

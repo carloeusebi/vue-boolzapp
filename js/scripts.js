@@ -11,8 +11,10 @@ const app = Vue.createApp({
             isTyping: 0,
             newMessage: '',
             contactSearchWord: '',
+            messageSearchWord: '',
             messageMenu: [],
-            notifications: false
+            notifications: false,
+            isSearchingMsg: false,
         }
     },
 
@@ -47,6 +49,11 @@ const app = Vue.createApp({
         filteredContactsBySearch() {
             const searchedWord = this.contactSearchWord.toLowerCase();
             return this.contacts.filter(({ name }) => name.toLowerCase().includes(searchedWord));
+        },
+
+        filteredMessagesBySearch() {
+            const searchedWord = this.messageSearchWord.toLowerCase();
+            return this.activeContact.messages.filter(({ message }) => message.toLowerCase().includes(searchedWord));
         },
 
         activeContact() {
@@ -103,6 +110,10 @@ const app = Vue.createApp({
             this.$nextTick(() => {
                 this.$refs.chatWindow.scrollTop = this.$refs.chatWindow.scrollHeight;
             })
+        },
+
+        toggleSearchMsg() {
+            this.isSearchingMsg = !this.isSearchingMsg;
         },
 
         /**
