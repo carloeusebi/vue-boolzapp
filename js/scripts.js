@@ -205,65 +205,55 @@ const createMessage = (contact, message, status) => {
  * @param {object} payload
  * @returns {string} the actual response or error message
  */
-async function makeRequest(payload) {
+const getGptResponse = async (userName, contact) => {
+
+    const getChatHistory = (userName, contact) => {
+        // initialize chatgpt chat history to be sent to chatgpt for context;
+        // first object in the array is the initial prompt with the instructions for chatgpt
+        const completeChat = [{
+            role: "system",
+            content: `Fingiamo una conversazione whatsapp, user si chiama ${userName} e assistant ${contact.name}, ricordati di fingere una versa persona e non un language model`
+        }];
+
+        // completes the array to send to chatgpt mounting our messages obj in a format that chatgpt accepts
+        contact.messages.forEach(({ message, status }) => {
+            const role = status === 'sent' ? 'user' : 'assistant';
+            completeChat.push({ role, content: message });
+        });
+
+        return completeChat;
+    }
+
     const url = 'https://api.openai.com/v1/chat/completions';
+    const messages = getChatHistory(userName, contact);
+
+    const options = {
+        method: 'POST',
+        url,
+        data: {
+            temperature: 0.9,
+            messages,
+            model: 'gpt-3.5-turbo'
+        },
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + APY_KEY
+        }
+    };
 
     let message = '';
 
     try {
-        const response = await fetch(url, {
-            method: 'POST',
-            body: JSON.stringify(payload),
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + APY_KEY
-            }
-        });
-
-        const jsonResponse = await response.json();
-
-        // we handle the response, if status is 200 the response will be chatgpt actual message, otherwise the response will be an error message with the status code
-        if (response.ok) {
-            message = jsonResponse.choices[0].message.content;
-        } else {
-            throw new Error(jsonResponse.error.message);
-        }
+        const response = await axios.request(options);
+        message = response.data.choices[0].message.content;
     } catch (e) {
-        message = e.message;
+        console.error(e);
+        message = `${e.message}<br>${e.response.data.error.message}`;
     }
+
 
     return message;
 }
-
-
-/**
- * Get the chat gpt response
- * @param {string} userName the user's name
- * @param {object} contact the current active contact
- * @returns returns the response text, ready to be mounted in the message object
- */
-async function getGptResponse(userName, contact) {
-
-    // initialize chatgpt chat history to be sent to chatgpt for context;
-    // first object in the array is the initial prompt with the instructions for chatgpt
-    const completeChat = [{
-        role: "system",
-        content: `Fingiamo una conversazione whatsapp, user si chiama ${userName} e assistant ${contact.name}, ricordati di fingere una versa persona e non un language model`
-    }];
-
-    // completes the array to send to chatgpt mounting our messages obj in a format that chatgpt accepts
-    contact.messages.forEach(({ message, status }) => {
-        const role = status === 'sent' ? 'user' : 'assistant';
-        completeChat.push({ role, content: message });
-    });
-
-    // makes the request and returns the text
-    return await makeRequest({
-        temperature: 0.9,
-        model: 'gpt-3.5-turbo',
-        messages: completeChat
-    })
-};
 
 /**
  * Generates a response, if an API KEY is found it will ask chatgpt to generate a coherent answer to our message, otherwise it will return a message with the instructions to get the key
@@ -271,7 +261,7 @@ async function getGptResponse(userName, contact) {
  * @param {object} contact the current active contact
  * @returns {string} the message text
  */
-async function getResponse(userName, contact) {
+const getResponse = async (userName, contact) => {
 
     // The default message with instruction on how to get and 'install' a key
     let message = `Non è stata rilevata nessuna API KEY per chat GPT, quindi non potrà rispondere.<br>
