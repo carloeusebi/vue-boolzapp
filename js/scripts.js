@@ -13,6 +13,7 @@ const app = Vue.createApp({
             newMessage: '',
             contactSearchWord: '',
             messageSearchWord: '',
+            activeMessageMenu: -1,
             messageMenu: [],
             notifications: false,
             isSearchingMsg: false,
@@ -63,19 +64,15 @@ const app = Vue.createApp({
             this.activeContactId = 0;
         },
 
-        // it has a timeout because since clicking on the message menu list is also clicking on the chat window, and a click on the chat window closes the message menu, che closing of the message menu needs to be delayed to allow the click on the list to be registered.
         hideAllMessageMenus() {
-            setTimeout(() => {
-                this.messageMenu = this.messageMenu.map(elem => elem = false)
-            }, 50);
+            this.activeMessageMenu = -1;
         },
 
-        // since the hidAllMessageMenus function has a timeout, this function also needs a timeout; it closes all the other message menus, waits 1th of a second and then show the clicked one
-        showMessageMenu(i) {
-            this.hideAllMessageMenus();
+        // since clicking on showMessageMenu button is also clicking on an element that has hideAllMessageMenus, this function needs a timeout; it closes all the other message menus, waits 1th of a second and then show the clicked one
+        showMessageMenu(id) {
             setTimeout(() => {
-                this.messageMenu[i] = true
-            }, 100);
+                this.activeMessageMenu = id;
+            }, 10);
         },
 
         toggleContactMenu() {

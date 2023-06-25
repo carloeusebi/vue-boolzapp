@@ -7,9 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="Carlo Eusebi">
     <title>Boolzapp</title>
-    <link rel="icon" type="icon/png" href="https://boolean.careers/favicon/favicon-32x32.png">
+    <link rel="icon" type="icon/png"
+        href="https://boolean.careers/favicon/favicon-32x32.png">
     <!-- font awesome -->
-    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css'
+    <link rel='stylesheet'
+        href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css'
         integrity='sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=='
         crossorigin='anonymous'>
     <!-- my library -->
@@ -49,7 +51,8 @@
                         <!-- contact card -->
                         <div class="contact user">
                             <div class="avatar">
-                                <img :src="`img/avatar${user.avatar}.jpg`" :alt="user.name">
+                                <img :src="`img/avatar${user.avatar}.jpg`"
+                                    :alt="user.name">
                             </div>
                             <p class="name">{{user.name}}</p>
                         </div>
@@ -62,20 +65,26 @@
                     </header>
 
                     <!-- notification -->
-                    <div v-if="!notifications" id="notification-settings" class="contact">
+                    <div v-if="!notifications" id="notification-settings"
+                        class="contact">
                         <div class="avatar d-flex justify-center align-center">
                             <i class="fa-solid fa-bell-slash fa-xl"></i>
                         </div>
                         <div>
-                            <p class="name">Receive new message notifications</p>
-                            <p @click="activateNotifications" class="activate-notification-btn">Activate desktop
+                            <p class="name">Receive new message notifications
+                            </p>
+                            <p @click="activateNotifications"
+                                class="activate-notification-btn">Activate
+                                desktop
                                 notifications</p>
                         </div>
                     </div>
 
                     <!-- search -->
                     <div class="search-contact">
-                        <input type="search" placeholder="Search or start a new chat" v-model.trim="contactSearchWord">
+                        <input type="search"
+                            placeholder="Search or start a new chat"
+                            v-model.trim="contactSearchWord">
                     </div>
 
                     <!-- contact list -->
@@ -87,14 +96,19 @@
                                 <div v-if="contact.visible" class=" contact"
                                     :class="{'active' : isActiveContact(contact.id)}">
                                     <div class="avatar">
-                                        <img :src="`img/avatar${contact.avatar}.jpg`" :alt="contact.name">
+                                        <img :src="`img/avatar${contact.avatar}.jpg`"
+                                            :alt="contact.name">
                                     </div>
                                     <div class="name-wrapper">
                                         <p class="name">{{contact.name}}</p>
-                                        <p v-if="isTyping === contact.id" class="message text-start">Is typing...</p>
-                                        <p v-else class="message">{{getLastMessage(contact)}}</p>
+                                        <p v-if="isTyping === contact.id"
+                                            class="message text-start">Is
+                                            typing...</p>
+                                        <p v-else class="message">
+                                            {{getLastMessage(contact)}}</p>
                                     </div>
-                                    <p class="last-access">{{getLastOnline(contact)}}</p>
+                                    <p class="last-access">
+                                        {{getLastOnline(contact)}}</p>
                                 </div>
                             </li>
 
@@ -111,18 +125,22 @@
 
                         <!-- go back arrow, only visible on tablets -->
                         <div class=" d-flex align-center">
-                            <div @click="unsetActiveContact" class="tablet-only">
-                                <i class="fa-solid fa-arrow-left fa-xl text-gray"></i>
+                            <div @click="unsetActiveContact"
+                                class="tablet-only">
+                                <i
+                                    class="fa-solid fa-arrow-left fa-xl text-gray"></i>
                             </div>
 
                             <!-- contact -->
                             <div class="contact active flex-shrink-0">
                                 <div class="avatar">
-                                    <img :src="`img/avatar${activeContact.avatar}.jpg`" :alt="activeContact.name">
+                                    <img :src="`img/avatar${activeContact.avatar}.jpg`"
+                                        :alt="activeContact.name">
                                 </div>
                                 <div class="text-align-start">
                                     <p class="name">{{ activeContact.name}}</p>
-                                    <p v-if="isTyping" class="last-access">Is typing...</p>
+                                    <p v-if="isTyping" class="last-access">Is
+                                        typing...</p>
                                     <p v-else class="desktop last-access">
                                         Last seen online
                                         {{getLastOnline(activeContact)}}
@@ -133,10 +151,13 @@
 
                         <!-- chat buttons -->
                         <div class="activity-buttons">
-                            <input v-if="isSearchingMsg" type="search" v-model.trim="messageSearchWord">
-                            <i @click="toggleSearchMsg" class="fa-solid fa-xl fa-magnifying-glass"></i>
+                            <input v-if="isSearchingMsg" type="search"
+                                v-model.trim="messageSearchWord">
+                            <i @click="toggleSearchMsg"
+                                class="fa-solid fa-xl fa-magnifying-glass"></i>
                             <i class="fa-solid fa-xl fa-paperclip"></i>
-                            <i @click="toggleContactMenu" class="fa-solid fa-xl fa-ellipsis-vertical"></i>
+                            <i @click="toggleContactMenu"
+                                class="fa-solid fa-xl fa-ellipsis-vertical"></i>
                             <div v-if="contactMenu" class="dropdown-menu">
                                 <ul>
                                     <li @click="hideContact">Hide Contact</li>
@@ -150,14 +171,19 @@
                     <div class="chat" ref="chatWindow">
 
 
-                        <div v-for="message in filteredMessagesBySearch" class="bubble" :class="message.status">
-                            <p class="message mr-20" v-html="message.message"></p>
+                        <div v-for="message in filteredMessagesBySearch"
+                            class="bubble" :class="message.status">
+                            <p class="message mr-20" v-html="message.message">
+                            </p>
                             <p class="date">{{message.date}}</p>
-                            <i class="fa-solid fa-angle-down" @click="showMessageMenu(message.id)"></i>
-                            <div v-if="messageMenu[message.id]" class="dropdown-menu">
+                            <i class="fa-solid fa-angle-down"
+                                @click="showMessageMenu(message.id)"></i>
+                            <div v-if="message.id === activeMessageMenu"
+                                class="dropdown-menu">
                                 <ul>
                                     <li>Message info</li>
-                                    <li @click="deleteMessage(message.id)">Delete message</li>
+                                    <li @click="deleteMessage(message.id)">
+                                        Delete message</li>
                                 </ul>
                             </div>
                         </div>
@@ -171,7 +197,8 @@
                             <i class="fa-regular fa-face-smile fa-xl"></i>
                         </div>
                         <div class="message-input h-100">
-                            <textarea rows="1" placeholder="Scrivi un messaggio" v-model.trim="newMessage"
+                            <textarea rows="1" placeholder="Scrivi un messaggio"
+                                v-model.trim="newMessage"
                                 @keyup.enter="sendUserMessage"></textarea>
                         </div>
                         <div class="send activity-buttons">
