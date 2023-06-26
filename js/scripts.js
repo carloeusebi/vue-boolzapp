@@ -43,11 +43,12 @@ const app = Vue.createApp({
     methods: {
 
         getLastMessage({ messages }) {
-            return messages[messages.length - 1].message;
+
+            return messages.length > 0 ? messages[messages.length - 1].message : '';
         },
 
         getLastOnline({ messages }) {
-            return messages[messages.length - 1].date;
+            return messages.length > 0 ? messages[messages.length - 1].date : '';
         },
 
         //  Every contact in the contacts list calls this function to know if he is the current active, if he is a css class will the contact a background
