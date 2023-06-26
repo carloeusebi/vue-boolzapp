@@ -13,7 +13,7 @@ const app = Vue.createApp({
             newMessage: '',
             contactSearchWord: '',
             messageSearchWord: '',
-            activeMessageMenu: -1,
+            activeMessageMenu: null,
             messageMenu: [],
             notifications: false,
             isSearchingMsg: false,
@@ -65,7 +65,7 @@ const app = Vue.createApp({
         },
 
         hideAllMessageMenus() {
-            this.activeMessageMenu = -1;
+            this.activeMessageMenu = null;
         },
 
         // since clicking on showMessageMenu button is also clicking on an element that has hideAllMessageMenus, this function needs a timeout; it closes all the other message menus, waits 1th of a second and then show the clicked one
